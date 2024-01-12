@@ -1,5 +1,7 @@
 // dependecies 
 const express = require('express')
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 
 // application 
 const app = express()
@@ -8,6 +10,28 @@ const app = express()
 const origine = require('./routes/OrigineRoute')
 const plat = require('./routes/platRoute')
 
+
+// Swagger
+
+const swaggerOptions = {
+definition: {
+    openapi: '3.0.0',
+    info: {
+    title: 'My API',
+    version: '1.0.0',
+    description: 'A sample API for learning Swagger',
+    },
+    servers: [
+    {
+        url: 'http://localhost:3000',
+    },
+    ],
+},
+apis: ['./routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // route midlleware 
 app.use(express.json())

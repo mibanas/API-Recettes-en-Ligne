@@ -14,7 +14,7 @@ routes.get('/', getOgirines)
 
 /**
  * @swagger
- * /:
+ * /origines:
  *   get:
  *     summary: Récupérer toutes les origines
  *     description: Retourne la liste complète des origines enregistrées.
@@ -50,7 +50,7 @@ routes.post('/', storeOrigine)
 
 /**
  * @swagger
- * /:
+ * /origines:
  *   post:
  *     summary: Ajouter une nouvelle origine
  *     description: Crée une nouvelle origine avec le nom fourni.
@@ -93,7 +93,7 @@ routes.put('/:id', updateOrigine)
 
 /**
  * @swagger
- * /{id}:
+ * /origines/{id}:
  *   put:
  *     summary: Mettre à jour une origine existante
  *     description: Met à jour le nom d'une origine existante en utilisant l'ID fourni.
@@ -141,7 +141,7 @@ routes.delete('/:id', deleteOrigine)
 
 /**
  * @swagger
- * /{id}:
+ * /origines/{id}:
  *   delete:
  *     summary: Supprimer une origine existante
  *     description: Supprime une origine existante en utilisant l'ID fourni.

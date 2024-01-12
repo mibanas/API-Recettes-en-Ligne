@@ -62,35 +62,42 @@ exports.storeOrigine = async (req, res, next) => {
 }
 
 exports.updateOrigine = async (req, res, next) => {
-    const { name } = req.body
-    const { id } = req.params
+    const { name } = req.body;
+    const { id } = req.params;
 
-    if(!mongoose.isValidObjectId(id)) {
+    if (!mongoose.isValidObjectId(id)) {
         return res.status(400).json({
-            success: true,
-            message: "id is not valid ! "
-        })
+            success: false,
+            message: "id is not valid!"
+        });
     }
 
     try {
-        const UpdateOrgines = await origine.findOneAndReplace({ _id : id }, {
-            name : name
-        })
-        res.status(200).json(
-            {
-                success : true,
-                data : UpdateOrgines
-            }
-        )
+        const updatedOrigine = await origine.findOneAndUpdate(
+            { _id: id },
+            { name: name },
+            { new: true } // Cette option renvoie le document mis à jour
+        );
+
+        if (!updatedOrigine) {
+            return res.status(404).json({
+                success: false,
+                message: 'Origine not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: updatedOrigine
+        });
     } catch (error) {
-        res.status(500).json(
-            {
-                success : false,
-                error : error
-            }
-        )
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
     }
-} 
+};
+
 
 exports.deleteOrigine = async (req, res, next) => {
     const { name } = req.body

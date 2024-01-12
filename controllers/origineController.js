@@ -1,26 +1,32 @@
 const mongoose = require('mongoose')
 const origine = require('../models/origineModel')
 
-
 exports.getOgirines = async (req, res, next) => {
-
     try {
-        const orgines = await origine.find()
-        res.status(200).json(
-            {
-                success : true,
-                data : orgines
-            }
-        )
+        const orgines = await origine.find();
+
+        if (orgines.length === 0) {
+            // Aucune origine trouvée
+            return res.status(404).json({
+                success: true,
+                message: 'Aucune origine trouvée'
+            });
+        }
+
+        // Origines trouvées
+        res.status(200).json({
+            success: true,
+            data: orgines
+        });
     } catch (error) {
-        res.status(500).json(
-            {
-                success : false,
-                error : error
-            }
-        )
+        // Erreur interne du serveur
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
     }
-}
+};
+
 
 exports.storeOrigine = async (req, res, next) => {
 

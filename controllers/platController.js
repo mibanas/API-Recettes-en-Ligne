@@ -186,3 +186,46 @@ exports.getOnePlat = async (req, res, next) => {
         });
     }
 };
+
+exports.platByOrigine = async (req, res, next) => {
+    const { origineName } = req.params
+
+    try {
+        try {
+            const idOrigine = await origines.find({ name : origineName})
+
+            if (idOrigine.length === 0) {
+                return res.status(404).json({
+                    success: true,
+                    message: `Origine Not Found !`
+                })
+            }
+            
+            const platByOrigine = await plats.find({origine : idOrigine[0]._id })
+
+            if (platByOrigine.length === 0) {
+                return res.status(404).json({
+                    success: true,
+                    message: `Any plat with these origine`
+                })
+            }   
+    
+            return res.status(200).json({
+              success : true,
+              data : platByOrigine  
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                success : false,
+                error : error.message
+            })
+        }   
+  
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error : error.message
+        })
+    }
+}

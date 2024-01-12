@@ -46,8 +46,8 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 Pour exécuter le serveur, utilisez la commande suivante :
 
-```bash
-npm start
+  ```bash
+  npm start
 
 
 ### Dependencies
